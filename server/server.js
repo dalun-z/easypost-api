@@ -2,8 +2,9 @@ const express = require('express');
 const EasyPostClient = require('@easypost/api');
 const cors = require('cors');
 const app = express();
+require('dotenv').config();
 
-const client = new EasyPostClient('EZTK3490817a697f4652bf95b574a63992c3XPfg4ydQ0hFfOmBSQgu8uw');
+const client = new EasyPostClient(process.env.EASYPOST_API_KEY);
 app.use(cors());
 app.use(express.json());
 
