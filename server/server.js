@@ -11,8 +11,6 @@ app.use(express.json());
 app.post('/api/createShipment', async (req, res) => {
   try {
     const shipment = await client.Shipment.create(req.body);
-    // shipment = await client.Shipment.retrieve('shp_...');
-    // const shipmentWithLabel = await client.Shipment.convertLabelFormat(shipment.id, 'ZPL');
     res.json(shipment);
   } catch (error) {
     console.error('Error:', error);
@@ -25,9 +23,13 @@ app.get('/api/shipments/:id/label', async (req, res) => {
 
   try {
     const shipment = await client.Shipment.retrieve(id);
-
+    
     try {
-      const boughtShipment = await client.Shipment.buy(shipment.id, shipment.lowestRate(), 249.99);
+      const boughtShipment = await client.Shipment.buy(shipment.id, shipment.lowestRate());
+      // console.log(boughtShipment);
+      const labelUrl = boughtShipment.postage_label.label_url;
+      res.json({ labelUrl });
+
     } catch (buyError) {
       console.error('Error buying shipment:', buyError);
       return res.status(422).json({ error: 'No rates found or error occurred during shipment purchase' });

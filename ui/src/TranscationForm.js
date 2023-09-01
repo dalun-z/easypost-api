@@ -66,6 +66,33 @@ function App() {
     return formattedData;
   };
 
+  const downloadImage = () => {
+    if (shipmentLabel) {
+      window.open(shipmentLabel, '_blank');
+      fetch('https://cors-anywhere.herokuapp.com/' + shipmentLabel, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/pdf',
+        },
+      })
+        .then((response) => response.blob())
+        .then((blob) => {
+          // Create blob link to download
+          const url = window.URL.createObjectURL(new Blob([blob]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'shipmentLabel.pdf'); // Set the desired filename
+          document.body.appendChild(link);
+
+          // Start download
+          link.click();
+
+          // Clean up and remove the link
+          link.parentNode.removeChild(link);
+        });
+    }
+  }
+
   const executeApiRequest = async () => {
     try {
 
@@ -77,7 +104,7 @@ function App() {
       const shipmentId = response.data.id;
       console.log("shipment id is : " + shipmentId);
       setShipmentResult(response.data);
-
+      // console.log(response.data);
       try {
         const txtData = generateTxtData(response.data);
 
@@ -92,7 +119,7 @@ function App() {
 
       const labelResponse = await axios.get(`http://localhost:5000/api/shipments/${shipmentId}/label`);
       console.log(labelResponse.data);
-      const labelUrl = labelResponse.data.postage_label.label_url;
+      const labelUrl = labelResponse.data.labelUrl;
       console.log('Label URL:', labelUrl);
       setShipmentLabel(labelUrl);
 
@@ -125,9 +152,7 @@ function App() {
           <div className='download-section'>
             <h2>{shipmentLabel}</h2>
             <div className='download-button'>
-              <a href={shipmentLabel} download="label.png">
-                Download Label
-              </a>
+              <button onClick={downloadImage}>Download Label</button>
             </div>
           </div>
         )}
