@@ -101,30 +101,32 @@ function App() {
         parcel: parcel,
       });
 
-      const shipmentId = response.data.id;
-      console.log("shipment id is : " + shipmentId);
-      setShipmentResult(response.data);
+      if (response.status === 200) {
+        const shipmentId = response.data.id;
+        console.log("shipment id is : " + shipmentId);
+        setShipmentResult(response.data);
 
-      try {
-        const txtData = generateTxtData(response.data);
-        const txtBlob = new Blob([txtData], { type: 'text/plain' });
-        const txtUrl = URL.createObjectURL(txtBlob);
-        setTxtDownloadUrl(txtUrl);
-      } catch (error) {
-        console.error('PDF Generation Error:', error);
-      }
-
-      setTimeout(async () => {
         try {
-          const labelResponse = await axios.get(`http://localhost:5000/api/v1/shipments/${shipmentId}/label`);
-          console.log(labelResponse.data);
-          const labelUrl = labelResponse.data.labelUrl;
-          console.log('Label URL:', labelUrl);
-          setShipmentLabel(labelUrl);
+          const txtData = generateTxtData(shipmentResult);
+          const txtBlob = new Blob([txtData], { type: 'text/plain' });
+          const txtUrl = URL.createObjectURL(txtBlob);
+          setTxtDownloadUrl(txtUrl);
         } catch (error) {
-          console.error('Error fetching labal: ', error);
+          console.error('PDF Generation Error:', error);
         }
-      }, 1000); // 1s delay after the 1st request
+
+        setTimeout(async () => {
+          try {
+            const labelResponse = await axios.get(`http://localhost:5000/api/v1/shipments/${shipmentId}/label`);
+            console.log(labelResponse.data);
+            const labelUrl = labelResponse.data.labelUrl;
+            console.log('Label URL:', labelUrl);
+            setShipmentLabel(labelUrl);
+          } catch (error) {
+            console.error('Error fetching labal: ', error);
+          }
+        }, 1000); // 1s delay after the 1st request
+      }
 
     } catch (error) {
       console.error('Error:', error);
