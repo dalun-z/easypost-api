@@ -1,18 +1,21 @@
-import './css/App.css';
+import './css/Auth.css'
+import './css/App.css'
+import React from 'react';
 import TransactionForm from './TranscationForm';
 import SignIn from './Auth/SignIn';
+import SignUp from './Auth/SignUp';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className='App-header'>
-        {/* <h1>Title</h1> */}
-      </header>
-      <main>
-        <SignIn />
-        {/* <TransactionForm /> */}
-      </main>
-    </div>
+    <Router>
+      <Routes>
+        <Route path='/' element={<SignIn />} />
+        <Route path='/signin' element={<SignIn />} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/transform' element={<TransactionForm />} />
+      </Routes>
+    </Router>
   );
 }
 

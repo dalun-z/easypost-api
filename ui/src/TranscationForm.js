@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './css/Form.css'
 
-function App() {
+function TransactionForm() {
   const [fromAddress, setFromAddress] = useState({
     street1: '417 MONTGOMERY ST',
     street2: 'FLOOR 5',
@@ -175,4 +176,4 @@ function App() {
   );
 }
 
-export default App;
+export default TransactionForm;
