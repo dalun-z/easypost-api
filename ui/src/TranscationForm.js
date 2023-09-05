@@ -95,36 +95,48 @@ function App() {
 
   const executeApiRequest = async () => {
     try {
-
-      const response = await axios.post('http://localhost:5000/api/createShipment', {
+      const response = await axios.post('http://localhost:5000/api/v1/createShipment', {
         from_address: fromAddress,
         to_address: toAddress,
         parcel: parcel,
       });
+
       const shipmentId = response.data.id;
       console.log("shipment id is : " + shipmentId);
       setShipmentResult(response.data);
-      // console.log(response.data);
+
       try {
         const txtData = generateTxtData(response.data);
-
         const txtBlob = new Blob([txtData], { type: 'text/plain' });
-
         const txtUrl = URL.createObjectURL(txtBlob);
-
         setTxtDownloadUrl(txtUrl);
       } catch (error) {
         console.error('PDF Generation Error:', error);
       }
 
-      const labelResponse = await axios.get(`http://localhost:5000/api/shipments/${shipmentId}/label`);
-      console.log(labelResponse.data);
-      const labelUrl = labelResponse.data.labelUrl;
-      console.log('Label URL:', labelUrl);
-      setShipmentLabel(labelUrl);
+      setTimeout(async () => {
+        try {
+          const labelResponse = await axios.get(`http://localhost:5000/api/v1/shipments/${shipmentId}/label`);
+          console.log(labelResponse.data);
+          const labelUrl = labelResponse.data.labelUrl;
+          console.log('Label URL:', labelUrl);
+          setShipmentLabel(labelUrl);
+        } catch (error) {
+          console.error('Error fetching labal: ', error);
+        }
+      }, 1000); // 1s delay after the 1st request
 
     } catch (error) {
       console.error('Error:', error);
+
+      if (error.response) {
+        console.error('Response Data:', error.response.data);
+        console.error('Response Status:', error.response.status);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error details:', error.message);
+      }
     }
   };
 
