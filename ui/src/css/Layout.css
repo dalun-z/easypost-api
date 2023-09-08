@@ -1,0 +1,28 @@
+/* Layout.css */
+.layout {
+    display: flex;
+    grid-template-columns: 200px 1fr; /*  Adjust the width of the sidebar as needed */
+    gap: 80px; /* Adjust the gap between the sidebar and main content as needed */
+  }
+  
+  .sidebar {
+    color:rgb(122, 37, 3);
+    margin-left: 40px;
+    margin-top: 200px;
+    font-family: 'Noto Sans TC', sans-serif;
+    display: flex;
+    flex-direction: column;
+    background-color: #9c9e9e !important;
+  }
+
+
+  .main-content {
+    margin-top: 40px;
+    width: 1500px;
+    height: auto;
+    color: rgb(7, 7, 7);
+    font-size: 12pt;
+    flex:1;
+  }
+
+ 

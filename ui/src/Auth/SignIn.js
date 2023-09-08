@@ -11,7 +11,7 @@ function SignIn() {
     e.preventDefault();
     // Add sign-in logic here
     if (email === 'dalun.z@gmail.com' && password === '1234') {
-        navigate('/transform');
+        navigate('/admin');
     } else {
         alert(`User doesn't exist`);
     }

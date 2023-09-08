@@ -1,0 +1,28 @@
+/* Styles for the banner container */
+.banner {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex;
+    padding: 20px;
+    background-color: #9c9e9e;
+  }
+
+  /* Styles for the link button */
+  .banner h1 {
+    text-decoration: none;
+    padding: 10px 40px;
+    /* background-color: #0d233b; */
+    color: #a11717;
+    border-radius: 8px;
+    transition: background-color 0.4s ease;
+    margin-left: 20px;
+    font-size: 13pt;
+
+  }
+  
+  .banner h1:hover {
+    background-color: #0056b3;
+    color: white;
+  }
+  
