@@ -5,6 +5,7 @@ import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import Member from "../adminPages/member";
 import Order from "../adminPages/order"
 import Path from "../adminPages/path";
+import TransactionForm from "../TranscationForm";
 
 
 const AdminPage = () => {
@@ -14,6 +15,7 @@ const AdminPage = () => {
         Member: <Member />,
         Order: <Order />,
         Path: <Path />,
+        TransactionForm: <TransactionForm />,
     }
 
     const handleContentChange = ct => {
@@ -41,6 +43,7 @@ const AdminPage = () => {
                         <MenuItem onClick={() => handleContentChange('Member')}>會員管理</MenuItem>
                         <MenuItem onClick={() => handleContentChange('Order')}>訂單管理</MenuItem>
                         <MenuItem onClick={() => handleContentChange('Path')}>渠道管理</MenuItem>
+                        <MenuItem onClick={() => handleContentChange('TransactionForm')}>EasyPost表格</MenuItem>
                     </Menu>
                 </Sidebar>
             }
