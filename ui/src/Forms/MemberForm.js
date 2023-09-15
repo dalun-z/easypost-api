@@ -83,7 +83,7 @@ function MemberForm() {
 
     return (
         <div className="form">
-            <h1>Member Information Form</h1>
+            <h1>Member Registration Form</h1>
             <div className="row">
                 {renderInputFields()}
                 {/* Add your submit button and form handling logic here */}
