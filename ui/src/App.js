@@ -12,12 +12,12 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<SignIn />} />
-        <Route path='/signin' element={<SignIn />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/admin' element={<AdminPage />}/>
-        <Route path='/transform' element={<TransactionForm />} />
-        <Route path='/addPath' element={<PathForm />}></Route>
+        <Route path='/easypost-api' element={<SignIn />} />
+        <Route path='/easypost-api/signin' element={<SignIn />} />
+        <Route path='/easypost-api/signup' element={<SignUp />} />
+        <Route path='/easypost-api/admin' element={<AdminPage />}/>
+        <Route path='/easypost-api/transform' element={<TransactionForm />} />
+        <Route path='/easypost-api/addPath' element={<PathForm />}></Route>
       </Routes>
     </Router>
   );
