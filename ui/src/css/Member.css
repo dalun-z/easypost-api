@@ -1,0 +1,41 @@
+/* Center the table on the page */
+.member-container {
+    margin-top: 20px;
+    margin-left: 0;
+  }
+  
+  /* Style the table header */
+  .member-container table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    padding: 18px;
+    border: 2px solid #ddd;
+  }
+  
+  /* Style the table rows */
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  tr:nth-child(odd) {
+    background-color: #fff;
+  }
+  
+  td {
+    padding: 18px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Style the table header for each company */
+  h2 {
+    margin-top: 20px;
+    font-size: 24px;
+    text-align: center;
+  }
+  

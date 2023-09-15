@@ -6,6 +6,8 @@
     justify-content: flex;
     padding: 20px;
     background-color: #9c9e9e;
+    overflow: auto;
+    width: 2000px;
   }
 
   /* Styles for the link button */
