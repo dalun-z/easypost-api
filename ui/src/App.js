@@ -1,7 +1,7 @@
 // import './css/Auth.css'
 import './css/App.css'
 import React from 'react';
-import TransactionForm from './TranscationForm';
+import TransactionForm from './Forms/TranscationForm';
 import SignIn from './Auth/SignIn';
 import SignUp from './Auth/SignUp';
 import AdminPage from './Pages/AdminPage';

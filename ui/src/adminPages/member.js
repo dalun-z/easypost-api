@@ -1,11 +1,9 @@
 import React from "react";
 
 const member = () => {
-    return (
-        <div>
-            here is member page
-        </div>
-    )
+    <div>
+        
+    </div>
 }
 
 export default member;
