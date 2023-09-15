@@ -60,7 +60,7 @@ const path = () => {
     return (
         <div className="path-container">
             <h1>渠道信息</h1>
-            <div className="addPath"><Link to='/addPath' style={{color:'white', fontSize:'20pt'}}>新增渠道</Link></div>
+            <div className="addPath"><Link to='/easypost-api/addPath' style={{color:'white', fontSize:'20pt'}}>新增渠道</Link></div>
             <table>
                 <thead>
                     <tr>

@@ -17,7 +17,7 @@ function App() {
         <Route path='/easypost-api/signup' element={<SignUp />} />
         <Route path='/easypost-api/admin' element={<AdminPage />}/>
         <Route path='/easypost-api/transform' element={<TransactionForm />} />
-        <Route path='/easypost-api/addPath' element={<PathForm />}></Route>
+        <Route path='/easypost-api/addPath' element={<PathForm />} />
       </Routes>
     </Router>
   );
