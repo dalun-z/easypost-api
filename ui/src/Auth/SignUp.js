@@ -54,7 +54,7 @@ function SignUp() {
                     </button>
                 </form>
                 <p>Already have an account?</p>
-                <Link to="/signin" className="auth-button">Sign In</Link>
+                <Link to="/easypost-api/signin" className="auth-button">Sign In</Link>
             </div>
         </div>
     );

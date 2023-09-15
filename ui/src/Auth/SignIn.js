@@ -3,15 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../css/Auth.css'; // Import the CSS file
 
 function SignIn() {
-  const [email, setEmail] = useState('dalun.z@gmail.com');
+  const [email, setEmail] = useState('admin@info.com');
   const [password, setPassword] = useState('1234');
   const navigate = useNavigate();
 
   const handleSignIn = (e) => {
     e.preventDefault();
     // Add sign-in logic here
-    if (email === 'dalun.z@gmail.com' && password === '1234') {
-        navigate('/admin');
+    if (email === 'admin@info.com' && password === '1234') {
+        navigate('/easypost-api/admin');
     } else {
         alert(`User doesn't exist`);
     }
@@ -43,7 +43,7 @@ function SignIn() {
           </button>
         </form>
         <p>Don't have an account?</p>
-        <Link to="/signup" className="auth-button">Sign Up</Link>
+        <Link to="/easypost-api/signup" className="auth-button">Sign Up</Link>
       </div>
     </div>
   );
