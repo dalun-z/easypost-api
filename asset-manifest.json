@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/dalun-z/easypost-api/static/css/main.c1b86657.css",
-    "main.js": "/dalun-z/easypost-api/static/js/main.d47464bd.js",
-    "index.html": "/dalun-z/easypost-api/index.html",
-    "main.c1b86657.css.map": "/dalun-z/easypost-api/static/css/main.c1b86657.css.map",
-    "main.d47464bd.js.map": "/dalun-z/easypost-api/static/js/main.d47464bd.js.map"
+    "main.css": "/easypost-api/static/css/main.c1b86657.css",
+    "main.js": "/easypost-api/static/js/main.d47464bd.js",
+    "index.html": "/easypost-api/index.html",
+    "main.c1b86657.css.map": "/easypost-api/static/css/main.c1b86657.css.map",
+    "main.d47464bd.js.map": "/easypost-api/static/js/main.d47464bd.js.map"
   },
   "entrypoints": [
     "static/css/main.c1b86657.css",
