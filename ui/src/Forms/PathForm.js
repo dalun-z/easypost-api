@@ -64,7 +64,7 @@ function MemberForm() {
         //   ))}
         // </div>
         <div className="section">
-            <h2>Member Information</h2>
+            <h2>Path Information</h2>
             <form onSubmit={handleSubmit}>
                 {Object.entries(formData).map(([field, value]) => (
                     <React.Fragment key={field}>
@@ -83,7 +83,7 @@ function MemberForm() {
 
     return (
         <div className="form">
-            <h1>Member Registration Form</h1>
+            <h1>Path Registration Form</h1>
             <div className="row">
                 {renderInputFields()}
                 {/* Add your submit button and form handling logic here */}
