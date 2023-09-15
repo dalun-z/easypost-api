@@ -1,7 +1,7 @@
 {
   "name": "ui",
   "version": "0.1.0",
-  "homepage": "https://github.com/dalun-z/easypost-api",
+  "homepage": "https://dalun-z.github.io/easypost-api",
   "private": true,
   "dependencies": {
     "@craco/craco": "^7.1.0",
