@@ -1,0 +1,56 @@
+.path-form {
+    text-align: center;
+    padding: 20px;
+}
+
+.path-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.path-section {
+    flex-basis: calc(25% - 10px); /* Adjust the width to fit four fields in a row */
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button[type="submit"] {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Additional styling for the button, adjust as needed */
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Optional: Add responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .path-section {
+        flex-basis: 50%; /* Display two fields per row on smaller screens */
+    }
+}

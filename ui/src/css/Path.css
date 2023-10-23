@@ -4,12 +4,6 @@
   margin-right: 40px;
 }
 
-.addPath {
-  display: inline-block;
-  background-color: rgb(98, 145, 37);
-  border: none;
-}
-
 /* Style the table header */
 table {
   border-collapse: collapse;

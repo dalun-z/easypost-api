@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../css/Form.css';
+import '../css/PathForm.css';
 
 function MemberForm() {
     const [formData, setFormData] = useState({
@@ -50,22 +50,9 @@ function MemberForm() {
     };
 
     const renderInputFields = () => (
-        // <div className="section">
-        //   <h2>Member Information</h2>
-        //   {Object.entries(formData).map(([field, value]) => (
-        //     <React.Fragment key={field}>
-        //       <label>{field.replace(/\*/g, '').replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}:</label>
-        //       <input
-        //         type="text"
-        //         value={value}
-        //         onChange={(e) => handleInputChange(field, e.target.value)}
-        //       />
-        //     </React.Fragment>
-        //   ))}
-        // </div>
-        <div className="section">
+        <div className="path-selection">
             <h2>Path Information</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='path-form'>
                 {Object.entries(formData).map(([field, value]) => (
                     <React.Fragment key={field}>
                         <label>{field.replace(/\*/g, '').replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}:</label>
@@ -82,9 +69,9 @@ function MemberForm() {
     );
 
     return (
-        <div className="form">
+        <div className="path-form">
             <h1>Path Registration Form</h1>
-            <div className="row">
+            <div className="path-row">
                 {renderInputFields()}
                 {/* Add your submit button and form handling logic here */}
             </div>

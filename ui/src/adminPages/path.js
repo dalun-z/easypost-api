@@ -1,8 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import '../css/Path.css'
+import PathForm from '../Forms/PathForm';
 
-const path = () => {
+const AddPathForm = () => {
+    return (
+      <div>
+        <PathForm />
+      </div>
+    );
+  };
+
+const Path = () => {
     const data = [
         {
             ID: '1',
@@ -57,10 +65,21 @@ const path = () => {
 
     const headers = Object.keys(data[0]);
 
+    const [showAddChannel, setShowAddChannel] = useState(false);
+
+    const toggleAddChannel = () => {
+      setShowAddChannel(!showAddChannel);
+    };
+
     return (
         <div className="path-container">
             <h1>渠道信息</h1>
-            <div className="addPath"><Link to='/easypost-api/addPath' style={{color:'white', fontSize:'20pt'}}>新增渠道</Link></div>
+            <div className="">
+                <button onClick={toggleAddChannel}>
+                  {showAddChannel ? '关闭新增渠道' : '新增渠道'}
+                </button>
+            </div>
+            {showAddChannel && <AddPathForm />}
             <table>
                 <thead>
                     <tr>
@@ -83,4 +102,4 @@ const path = () => {
     )
 }
 
-export default path;
+export default Path;
