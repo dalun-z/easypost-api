@@ -31,8 +31,49 @@ const UserSchema = new mongoose.Schema({
     },
     balance: {
         type: Int32,
-        required: [true, 'Please enter amount'],
         default: 0,
     },
-    
+    pre_shipment: {
+        type: Int32,
+        default: 0,
+    },
+    pre_transit: {
+        type: Int32,
+        default: 0,
+    },
+    in_transit: {
+        type: Int32,
+        default: 0,
+    },
+    out_for_delivery: {
+        type: Int32,
+        default: 0,
+    },
+    delivered: {
+        type: Int32,
+        default: 0,
+    },
+    ok_to_pickup: {
+        type: Int32,
+        default: 0,
+    },
+    return_to_sender: {
+        type: Int32,
+        default: 0,
+    },
+    failure: {
+        type: Int32,
+        default: 0,
+    },
+    cancelled: {
+        type: Int32,
+        default: 0,
+    },
+    error: {
+        type: Int32,
+        default: 0,
+    },
 })
+
+
+module.exports = mongoose.model('User', UserSchema)
