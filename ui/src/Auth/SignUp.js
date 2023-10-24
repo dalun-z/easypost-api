@@ -1,22 +1,36 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import useHistory from react-router-dom
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom'; 
 import '../css/Auth.css';
 
 function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [fullName, setFullName] = useState('');
+    const [region, setRegion] = useState('');
 
-    const handleSignUp = (e) => {
+    const navigate = useNavigate();
+
+    const handleSignUp = async (e) => {
         e.preventDefault();
-        // Add sign-up logic here
-        // After successful sign-up, you can navigate to another page, e.g., the dashboard
 
-        if (password === confirmPassword) {
-            // Passwords match, proceed with sign-up
-        } else {
-            // Passwords do not match, handle error or display a message
+        if (password !== confirmPassword) {
             alert("Passwords do not match. Please try again.");
+            return;
+        }
+
+        try {
+            const response = await axios.post('http://localhost:5000/api/v1/auth/register', {
+                email,
+                password,
+                fullName,
+                region,
+            });
+            alert("Registration successful!");
+            navigate('/easypost-api/signin')
+        } catch (err) {
+            alert("Registration failed. Please try again.");
         }
     };
 
@@ -46,7 +60,23 @@ function SignUp() {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         className="auth-input"
-                        placeholder="Confirm Password" // Add "Confirm Password" input
+                        placeholder="Confirm Password"
+                        required
+                    />
+                    <input
+                        type="text"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        className="auth-input"
+                        placeholder="Enter your name or your company name"
+                        required
+                    />
+                    <input
+                        type="text"
+                        value={region}
+                        onChange={(e) => setRegion(e.target.value)}
+                        className="auth-input"
+                        placeholder="Enter your region"
                         required
                     />
                     <button type="submit" className="auth-button">
