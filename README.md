@@ -1,9 +1,12 @@
 
 ## Server
-`cd server`
-`node server.js`
-
+```
+cd server
+node server.js
+```
 
 ## UI
-`cd ui`
-`npm start`
+```
+cd ui
+npm start
+```

@@ -1,48 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
 import '../css/Member.css';
 
-const member = () => {
-    const data = [
-        {
-            編號: '1',
-            郵箱: 'user1@example.com',
-            '全名/公司名': 'John Doe',
-            所屬區域: 'Region A',
-            餘額: '$200.00',
-            'pre-shipment': 2,
-            'pre-transit': 1,
-            'in-transit': 3,
-            'out-for-delivery': 2,
-            delivered: 5,
-            'available for pickup': 1,
-            'return to sender': 0,
-            failure: 0,
-            cancelled: 1,
-            error: 0,
-            操作: 'Edit/Delete',
-        },
-        {
-            編號: '2',
-            郵箱: 'user2@example.com',
-            '全名/公司名': 'Alice Smith',
-            所屬區域: 'Region B',
-            餘額: '$150.00',
-            'pre-shipment': 1,
-            'pre-transit': 0,
-            'in-transit': 2,
-            'out-for-delivery': 1,
-            delivered: 3,
-            'available for pickup': 0,
-            'return to sender': 0,
-            failure: 0,
-            cancelled: 0,
-            error: 1,
-            操作: 'Edit/Delete',
-        },
-        // Add more data objects here as needed
-    ];
+const Member = () => {
+    const [users, setUsers] = useState([]);
+    const [editingUser, setEditingUser] = useState(null);
+    const [editedData, setEditedData] = useState([]);
 
-    const headers = Object.keys(data[0]);
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/v1/user/getallusers')
+            .then((response) => {
+                setUsers(response.data);
+            })
+            .catch((err) => {
+                console.error('Error fetching users', err);
+            });
+    }, []);
+
+    const handleEdit = (user) => {
+        setEditingUser(user);
+        setEditedData({});
+    }
+    
+    const handleSaveEdit = (user) => {
+        // Send a request to update the user's data with editedData
+        // You can define this API request on your server
+        // After saving, reset the editingUser state
+        // You should handle this part according to your API and state management
+    }
+    
+    const handleDelete = (userId) => {
+        // Send a request to delete the user by their id
+        // You can define this API request on your server
+        // After deleting, update the users state to remove the deleted user
+        // You should handle this part according to your API and state management
+    }
+
+    const headers = users.length > 0 ? Object.keys(users[0]) : [];
+
+    const excludedFields = ['role', 'password', '__v'];
+
+    const filteredHeaders = headers.filter(header => !excludedFields.includes(header));
 
     return (
         <div className="member-container">
@@ -50,17 +48,35 @@ const member = () => {
             <table>
                 <thead>
                     <tr>
-                        {headers.map((header) => (
+                        {filteredHeaders.map((header) => (
                             <th key={header}>{header}</th>
                         ))}
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
-                        <tr key={index}>
-                            {headers.map((header) => (
-                                <td key={header}>{item[header]}</td>
+                    {users.map((user, index) => (
+                        <tr key={user._id}>
+                            {filteredHeaders.map((header) => (
+                                <td key={header}>
+                                    {editingUser && editingUser._id === user._id ? (
+                                        <input
+                                            type="text"
+                                            value={editedData[header] || user[header]}
+                                            onChange={(e) => setEditedData({ ...editedData, [header]: e.target.value })}
+                                        />
+                                    ) : (
+                                        user[header]
+                                    )}
+                                </td>
                             ))}
+                            <td>
+                                {editingUser && editingUser._id === user._id ? (
+                                    <button onClick={() => handleSaveEdit(user)}>Save</button>
+                                ) : (
+                                    <button onClick={() => handleEdit(user)}>Edit</button>
+                                )}
+                                <button onClick={() => handleDelete(user._id)}>Delete</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -69,4 +85,4 @@ const member = () => {
     );
 }
 
-export default member;
+export default Member;
