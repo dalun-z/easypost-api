@@ -1,19 +1,39 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../css/Auth.css'; // Import the CSS file
+import axios from 'axios';
+import '../css/Auth.css'; 
+
 
 function SignIn() {
-  const [email, setEmail] = useState('admin@info.com');
-  const [password, setPassword] = useState('1234');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    // Add sign-in logic here
-    if (email === 'admin@info.com' && password === '1234') {
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/v1/auth/login', {
+        email,
+        password,
+      });
+      console.log('Response: ' + response)
+
+      const { user, token } = response.data;
+      console.log('User: ' + user)
+
+      localStorage.setItem('token', token);
+      
+      if (user.role === 'admin') {
         navigate('/easypost-api/admin');
-    } else {
-        alert(`User doesn't exist`);
+      } else {
+        navigate('easypost-api/user');
+      }
+      
+      // can also store user information in the app's state if needed
+      // setUser(user);
+    } catch (err) {
+      alert(`User doesn't exist or incorrect credentials`);
     }
   };
 

@@ -27,7 +27,14 @@ const login = async (req, res) => {
     }
 
     const token = user.createJWT();
-    res.status(StatusCodes.OK).json({ user: { email: user.email }, token})
+
+    const userData = {
+        _id: user._id,
+        email: user.email,
+        role: user.role,
+    }
+    
+    res.status(StatusCodes.OK).json({ user: userData, token})
 }
 
 module.exports = {
