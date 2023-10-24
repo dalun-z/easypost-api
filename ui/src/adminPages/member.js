@@ -16,6 +16,25 @@ const Member = () => {
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
+
+        // Make sure to adjust your API calls and user data handling to fit this pagination approach.
+        // For instance, you should send the current page and page size to your server to retrieve the appropriate user data.
+
+        // app.get('/api/v1/user/getallusers', (req, res) => {
+        //     const page = parseInt(req.query.page) || 1; // Get the requested page number
+        //     const pageSize = parseInt(req.query.pageSize) || 10; // Get the requested page size
+
+        //     const startIndex = (page - 1) * pageSize;
+        //     const endIndex = page * pageSize;
+
+        //     // Slice the user data based on the requested page and page size
+        //     const usersOnPage = allUsers.slice(startIndex, endIndex);
+
+        //     res.status(200).json(usersOnPage);
+        // });
+
+        // http://localhost:5000/api/v1/user/getallusers?page=1&pageSize=10 to get the first page with 10 users.
+        // http://localhost:5000/api/v1/user/getallusers?page=2&pageSize=10 to get the second page with the next 10 users, and so on.
     };
 
     useEffect(() => {
