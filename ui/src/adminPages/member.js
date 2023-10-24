@@ -8,11 +8,20 @@ const Member = () => {
     const [editedData, setEditedData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize] = useState(10);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = currentPage * pageSize;
-    const displayedUsers = users.slice(startIndex, endIndex);
+    let displayedUsers = users.slice(startIndex, endIndex);
     const totalPages = Math.ceil(users.length / pageSize);
+
+    if (searchQuery) {
+        displayedUsers = users.filter(user =>
+            Object.values(user).some(value =>
+                value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        );
+    }
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -90,6 +99,15 @@ const Member = () => {
     return (
         <div className="member-container">
             <h1>Member Information</h1>
+
+            <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search..."
+            />
+            <>{searchQuery}</>
+
             <table>
                 <thead>
                     <tr>
