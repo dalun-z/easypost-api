@@ -1,4 +1,3 @@
-const { Int32 } = require('mongodb')
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -32,47 +31,47 @@ const UserSchema = new mongoose.Schema({
         required: [true, 'Please provide region'],
     },
     balance: {
-        type: Int32,
+        type: Number,
         default: 0,
     },
     pre_shipment: {
-        type: Int32,
+        type: Number,
         default: 0,
     },
     pre_transit: {
-        type: Int32,
+        type: Number,
         default: 0,
     },
     in_transit: {
-        type: Int32,
+        type: Number,
         default: 0,
     },
     out_for_delivery: {
-        type: Int32,
+        type: Number,
         default: 0,
     },
     delivered: {
-        type: Int32,
+        type: Number,
         default: 0,
     },
     ok_to_pickup: {
-        type: Int32,
+        type: Number,
         default: 0,
     },
     return_to_sender: {
-        type: Int32,
+        type: Number,
         default: 0,
     },
     failure: {
-        type: Int32,
+        type: Number,
         default: 0,
     },
     cancelled: {
-        type: Int32,
+        type: Number,
         default: 0,
     },
     error: {
-        type: Int32,
+        type: Number,
         default: 0,
     },
 })
