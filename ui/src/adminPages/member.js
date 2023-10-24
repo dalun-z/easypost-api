@@ -6,6 +6,17 @@ const Member = () => {
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
     const [editedData, setEditedData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize] = useState(10);
+
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = currentPage * pageSize;
+    const displayedUsers = users.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(users.length / pageSize);
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
 
     useEffect(() => {
         axios.get('http://localhost:5000/api/v1/user/getallusers')
@@ -31,7 +42,7 @@ const Member = () => {
                 updatedUser[header] = editedData[header];
             }
         }
-        
+
         // Send a request to update the user's data with editedData
         // You can define this API request on your server
         // After saving, reset the editingUser state
@@ -96,6 +107,16 @@ const Member = () => {
                     ))}
                 </tbody>
             </table>
+
+            <div className="pagination">
+                <span>Page {currentPage} of {totalPages}</span>
+                <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                    Previous
+                </button>
+                <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                    Next
+                </button>
+            </div>
         </div>
     );
 }
