@@ -21,19 +21,34 @@ const Member = () => {
         setEditingUser(user);
         setEditedData({});
     }
-    
+
     const handleSaveEdit = (user) => {
+        const updatedUser = { ...user };
+
+        // Iterate through the editedData and only update non-email and non-id fields
+        for (const header in editedData) {
+            if (header !== 'email' && header !== '_id') {
+                updatedUser[header] = editedData[header];
+            }
+        }
+        
         // Send a request to update the user's data with editedData
         // You can define this API request on your server
         // After saving, reset the editingUser state
         // You should handle this part according to your API and state management
+        setEditingUser(null);
     }
-    
+
     const handleDelete = (userId) => {
-        // Send a request to delete the user by their id
-        // You can define this API request on your server
-        // After deleting, update the users state to remove the deleted user
-        // You should handle this part according to your API and state management
+        const shouldDelete = window.confirm("Are you sure you want to delete this user?");
+
+        if (shouldDelete) {
+            // Send a request to delete the user by their id
+            // You can define this API request on your server
+            // After deleting, update the users state to remove the deleted user
+            // You should handle this part according to your API and state management
+        }
+
     }
 
     const headers = users.length > 0 ? Object.keys(users[0]) : [];
