@@ -58,6 +58,11 @@ const Member = () => {
     const handleSaveEdit = (user) => {
         const updatedUser = { ...user };
 
+        // Merge changes from editedData into updatedUser
+        for (const header in editedData) {
+            updatedUser[header] = editedData[header];
+        }
+
         // Send a request to update the user's data with editedData
         // You can define this API request on your server
         // After saving, reset the editingUser state
@@ -71,7 +76,9 @@ const Member = () => {
 
                 if (userIndex !== -1) {
                     updatedUsers[userIndex] = updatedUser;
+
                     setUsers(updatedUsers);
+                    console.log(updatedUsers)
                 }
             })
             .catch((err) => {
@@ -142,7 +149,7 @@ const Member = () => {
                                                 onChange={(e) => setEditedData({ ...editedData, [header]: e.target.value })}
                                             />
                                         ) : (
-                                            header === 'balance' ? `$${user[header]}` : user[header]
+                                            header === 'balance' ? `$ ${user[header]}` : user[header]
                                         )
                                     )}
                                 </td>
