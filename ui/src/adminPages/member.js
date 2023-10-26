@@ -82,13 +82,21 @@ const Member = () => {
     }
 
     const handleDelete = (userId) => {
+        console.log(userId);
         const shouldDelete = window.confirm("Are you sure you want to delete this user?");
 
         if (shouldDelete) {
-            // Send a request to delete the user by their id
-            // You can define this API request on your server
-            // After deleting, update the users state to remove the deleted user
-            // You should handle this part according to your API and state management
+            axios.delete(`http://localhost:5000/api/v1/user/deleteuser/${userId}`)
+                .then((response) => {
+                    console.log('Deleted user!');
+
+                    // After successful deletion, update the users state.
+                    const updatedUsers = users.filter((user) => user._id !== userId);
+                    setUsers(updatedUsers);
+                })
+                .catch((err) => {
+                    console.log('Error deleting user', err);
+                })
         }
 
     }
@@ -125,6 +133,7 @@ const Member = () => {
                         <tr key={user._id}>
                             {filteredHeaders.map((header) => (
                                 <td key={header}>
+                                    {/* the below line of code block editing on `_id` field */}
                                     {header === '_id' ? `${user[header]}` : (
                                         editingUser && editingUser._id === user._id ? (
                                             <input

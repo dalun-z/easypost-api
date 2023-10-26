@@ -14,7 +14,7 @@ const getAllUsers = async (req, res) => {
 
         const totalUsers = users.length;
         const totalPages = Math.ceil(totalUsers / pageSize);
-        console.log(totalPages);
+        // console.log(totalPages);
 
         res.status(200).json({
             users: usersOnPage,
