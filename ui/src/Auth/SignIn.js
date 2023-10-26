@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/Auth.css'; 
 
-
 function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +12,7 @@ function SignIn() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/auth/login', {
+      const response = await axios.post('http://20.3.232.49:4400/api/v1/auth/login', {
         email,
         password,
       });
