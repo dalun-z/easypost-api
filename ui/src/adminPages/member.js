@@ -63,10 +63,6 @@ const Member = () => {
             updatedUser[header] = editedData[header];
         }
 
-        // Send a request to update the user's data with editedData
-        // You can define this API request on your server
-        // After saving, reset the editingUser state
-        // You should handle this part according to your API and state management
         axios.put(`http://localhost:5000/api/v1/user/updateuser/${user._id}`, updatedUser)
             .then((response) => {
                 console.log('Updated user successfully!');
@@ -86,6 +82,7 @@ const Member = () => {
             })
 
         setEditingUser(null);
+        setEditedData({});
     }
 
     const handleDelete = (userId) => {
