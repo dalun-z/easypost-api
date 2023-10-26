@@ -22,7 +22,6 @@ app.get('/', (req,res) => {
   res.send('easypost api')
 })
 
-
 // routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', userRouter)
@@ -30,7 +29,6 @@ app.use('/api/v1/', shipmentRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
-
 
 // connection
 const PORT = process.env.PORT || 5000;
