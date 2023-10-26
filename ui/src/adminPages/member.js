@@ -58,22 +58,26 @@ const Member = () => {
     const handleSaveEdit = (user) => {
         const updatedUser = { ...user };
 
-        // Iterate through the editedData and only update non-email and non-id fields
-        for (const header in editedData) {
-            if (header !== '_id') {
-                updatedUser[header] = editedData[header];
-            }
-        }
-
         // Send a request to update the user's data with editedData
         // You can define this API request on your server
         // After saving, reset the editingUser state
         // You should handle this part according to your API and state management
-        try {
+        axios.put(`http://localhost:5000/api/v1/user/updateuser/${user._id}`, updatedUser)
+            .then((response) => {
+                console.log('Updated user successfully!');
 
-        } catch (err) {
-            console.log(`Something wrong is happening`, err);
-        }
+                const updatedUsers = [...users];
+                const userIndex = updatedUsers.findIndex((u) => u._id === user._id);
+
+                if (userIndex !== -1) {
+                    updatedUsers[userIndex] = updatedUser;
+                    setUsers(updatedUsers);
+                }
+            })
+            .catch((err) => {
+                console.log('Error updating user', err);
+            })
+
         setEditingUser(null);
     }
 
@@ -121,14 +125,16 @@ const Member = () => {
                         <tr key={user._id}>
                             {filteredHeaders.map((header) => (
                                 <td key={header}>
-                                    {editingUser && editingUser._id === user._id ? (
-                                        <input
-                                            type="text"
-                                            value={editedData[header] || user[header]}
-                                            onChange={(e) => setEditedData({ ...editedData, [header]: e.target.value })}
-                                        />
-                                    ) : (
-                                        user[header]
+                                    {header === '_id' ? `${user[header]}` : (
+                                        editingUser && editingUser._id === user._id ? (
+                                            <input
+                                                type="text"
+                                                value={editedData[header] || user[header]}
+                                                onChange={(e) => setEditedData({ ...editedData, [header]: e.target.value })}
+                                            />
+                                        ) : (
+                                            header === 'balance' ? `$${user[header]}` : user[header]
+                                        )
                                     )}
                                 </td>
                             ))}
