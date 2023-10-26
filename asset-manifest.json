@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/easypost-api/static/css/main.c1b86657.css",
-    "main.js": "/easypost-api/static/js/main.3fcc4daf.js",
+    "main.css": "/easypost-api/static/css/main.eab59446.css",
+    "main.js": "/easypost-api/static/js/main.7616dc75.js",
     "index.html": "/easypost-api/index.html",
-    "main.c1b86657.css.map": "/easypost-api/static/css/main.c1b86657.css.map",
-    "main.3fcc4daf.js.map": "/easypost-api/static/js/main.3fcc4daf.js.map"
+    "main.eab59446.css.map": "/easypost-api/static/css/main.eab59446.css.map",
+    "main.7616dc75.js.map": "/easypost-api/static/js/main.7616dc75.js.map"
   },
   "entrypoints": [
-    "static/css/main.c1b86657.css",
-    "static/js/main.3fcc4daf.js"
+    "static/css/main.eab59446.css",
+    "static/js/main.7616dc75.js"
   ]
 }
