@@ -3,8 +3,23 @@ const User = require('../models/User')
 
 const getAllUsers = async (req, res) => {
     try {
+        const currentPage = parseInt(req.query.page) || 1;
+        const pageSize = parseInt(req.query.pageSize) || 5;
+
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = currentPage * pageSize;
+
         const users = await User.find();
-        res.status(200).json(users);
+        const usersOnPage = users.slice(startIndex, endIndex);
+
+        const totalUsers = users.length;
+        const totalPages = Math.ceil(totalUsers / pageSize);
+        console.log(totalPages);
+
+        res.status(200).json({
+            users: usersOnPage,
+            totalPage: totalPages,
+        });
     } catch (err) {
         res.status(500).json({ message: `Error getting users ` });
     }

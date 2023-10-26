@@ -6,55 +6,49 @@ const Member = () => {
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
     const [editedData, setEditedData] = useState([]);
+
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(1);
+    const [pageSize] = useState(5);
     const [searchQuery, setSearchQuery] = useState('');
-
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = currentPage * pageSize;
-    let displayedUsers = users.slice(startIndex, endIndex);
-    const totalPages = Math.ceil(users.length / pageSize);
-
-    if (searchQuery) {
-        displayedUsers = users.filter(user =>
-            Object.values(user).some(value =>
-                value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-            )
-        );
-    }
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
-
-        // Make sure to adjust your API calls and user data handling to fit this pagination approach.
-        // For instance, you should send the current page and page size to your server to retrieve the appropriate user data.
-
-        // app.get('/api/v1/user/getallusers', (req, res) => {
-        //     const page = parseInt(req.query.page) || 1; // Get the requested page number
-        //     const pageSize = parseInt(req.query.pageSize) || 10; // Get the requested page size
-
-        //     const startIndex = (page - 1) * pageSize;
-        //     const endIndex = page * pageSize;
-
-        //     // Slice the user data based on the requested page and page size
-        //     const usersOnPage = allUsers.slice(startIndex, endIndex);
-
-        //     res.status(200).json(usersOnPage);
-        // });
-
-        // http://localhost:5000/api/v1/user/getallusers?page=1&pageSize=10 to get the first page with 10 users.
-        // http://localhost:5000/api/v1/user/getallusers?page=2&pageSize=10 to get the second page with the next 10 users, and so on.
     };
 
+    // useEffect(() => {
+    //     axios.get('http://localhost:5000/api/v1/user/getallusers')
+    //         .then((response) => {
+    //             setUsers(response.data);
+    //         })
+    //         .catch((err) => {
+    //             console.error('Error fetching users', err);
+    //         });
+    // }, []);
+
     useEffect(() => {
-        axios.get('http://localhost:5000/api/v1/user/getallusers')
-            .then((response) => {
-                setUsers(response.data);
-            })
-            .catch((err) => {
-                console.error('Error fetching users', err);
-            });
-    }, []);
+        if (searchQuery) {
+            // Make an API request to get users based on the searchQuery
+            axios.get(`http://localhost:5000/api/v1/user/getuser?email=${searchQuery}`)
+                .then((response) => {
+                    setUsers(response.data.users);
+                    setTotalPages(response.data.totalPage);
+                })
+                .catch((err) => {
+                    console.error('Error fetching users', err);
+                });
+        } else {
+            // Make an API request to get all users
+            axios.get(`http://localhost:5000/api/v1/user/getallusers?page=${currentPage}&pageSize=${pageSize}`)
+                .then((response) => {
+                    setUsers(response.data.users);
+                    setTotalPages(response.data.totalPage);
+                })
+                .catch((err) => {
+                    console.error('Error fetching users', err);
+                });
+        }
+    }, [searchQuery, currentPage, pageSize]);
 
     const handleEdit = (user) => {
         setEditingUser(user);
@@ -66,7 +60,7 @@ const Member = () => {
 
         // Iterate through the editedData and only update non-email and non-id fields
         for (const header in editedData) {
-            if (header !== 'email' && header !== '_id') {
+            if (header !== '_id') {
                 updatedUser[header] = editedData[header];
             }
         }
@@ -75,6 +69,11 @@ const Member = () => {
         // You can define this API request on your server
         // After saving, reset the editingUser state
         // You should handle this part according to your API and state management
+        try {
+
+        } catch (err) {
+            console.log(`Something wrong is happening`, err);
+        }
         setEditingUser(null);
     }
 
@@ -95,6 +94,7 @@ const Member = () => {
     const excludedFields = ['role', 'password', '__v'];
 
     const filteredHeaders = headers.filter(header => !excludedFields.includes(header));
+
 
     return (
         <div className="member-container">
