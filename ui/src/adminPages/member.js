@@ -28,8 +28,8 @@ const Member = () => {
 
     useEffect(() => {
         if (searchQuery) {
-            // Make an API request to get users based on the searchQuery
-            axios.get(`http://20.3.232.49:4400/api/v1/user/getuser?email=${searchQuery}`)
+            // axios.get(`http://20.3.232.49:4400/api/v1/user/getuser?email=${searchQuery}`)
+            axios.get(`http://localhost:4400/api/v1/user/getuser?email=${searchQuery}`)
                 .then((response) => {
                     setUsers(response.data.users);
                     setTotalPages(response.data.totalPage);
@@ -39,7 +39,8 @@ const Member = () => {
                 });
         } else {
             // Make an API request to get all users
-            axios.get(`http://20.3.232.49:4400/api/v1/user/getallusers?page=${currentPage}&pageSize=${pageSize}`)
+            // axios.get(`http://20.3.232.49:4400/api/v1/user/getallusers?page=${currentPage}&pageSize=${pageSize}`)
+            axios.get(`http://localhost:4400/api/v1/user/getallusers?page=${currentPage}&pageSize=${pageSize}`)
                 .then((response) => {
                     setUsers(response.data.users);
                     setTotalPages(response.data.totalPage);
@@ -63,7 +64,8 @@ const Member = () => {
             updatedUser[header] = editedData[header];
         }
 
-        axios.put(`http://20.3.232.49:4400/api/v1/user/updateuser/${user._id}`, updatedUser)
+        // axios.put(`http://20.3.232.49:4400/api/v1/user/updateuser/${user._id}`, updatedUser)
+        axios.put(`http://localhost:4400/api/v1/user/updateuser/${user._id}`, updatedUser)
             .then((response) => {
                 console.log('Updated user successfully!');
 
@@ -72,9 +74,7 @@ const Member = () => {
 
                 if (userIndex !== -1) {
                     updatedUsers[userIndex] = updatedUser;
-
                     setUsers(updatedUsers);
-                    console.log(updatedUsers)
                 }
             })
             .catch((err) => {

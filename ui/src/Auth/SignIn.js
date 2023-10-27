@@ -12,14 +12,13 @@ function SignIn() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://20.3.232.49:4400/api/v1/auth/login', {
+      // const response = await axios.post('http://20.3.232.49:4400/api/v1/auth/login', {
+      const response = await axios.post('http://localhost:4400/api/v1/auth/login', {
         email,
         password,
       });
-      console.log('Response: ' + response)
 
       const { user, token } = response.data;
-      console.log('User: ' + user)
 
       localStorage.setItem('token', token);
       

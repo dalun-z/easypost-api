@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/Auth.css';
 
 function SignUp() {
@@ -21,7 +21,8 @@ function SignUp() {
         }
 
         try {
-            const response = await axios.post('http://20.3.232.49:4400/api/v1/auth/register', {
+            // const response = await axios.post('http://20.3.232.49:4400/api/v1/auth/register', {
+            await axios.post('http://localhost:4400/api/v1/auth/register', {
                 email,
                 password,
                 fullName,
