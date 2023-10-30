@@ -20,12 +20,10 @@ const Member = () => {
             // axios.get(`http://20.3.232.49:4400/api/v1/user/searchuser/${searchQuery}`)
             axios.get(`http://localhost:4400/api/v1/user/searchuser/${searchQuery}`)
                 .then((response) => {
-                    console.log(response);
-                    console.log(response.data);
                     const searchResult = response.data;
                     console.log('result is : ' + searchResult);
 
-                    if (response.data.users === 0) {
+                    if (searchResult === 0) {
                         setUsers([]);
                     } else {
                         setUsers(searchResult);
@@ -83,7 +81,7 @@ const Member = () => {
     }
 
     const handleDelete = (userId) => {
-        console.log(userId);
+        // console.log(userId);
         const shouldDelete = window.confirm("Are you sure you want to delete this user?");
 
         if (shouldDelete) {
@@ -100,13 +98,11 @@ const Member = () => {
                     console.log('Error deleting user', err);
                 })
         }
-
     }
 
     const headers = users.length > 0 ? Object.keys(users[0]) : [];
     const excludedFields = ['role', 'password', '__v'];
     const filteredHeaders = headers.filter(header => !excludedFields.includes(header));
-
 
     return (
         <div className="member-container">
