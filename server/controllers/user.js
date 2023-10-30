@@ -39,6 +39,24 @@ const getUserByEmail = async (req, res) => {
     }
 };
 
+const searchUser = async (req, res) => {
+    const searchQuery = req.params.query;
+
+    try {
+        const users = await User.find({
+            $or: [
+                { email: { $regex: searchQuery, $options: 'i' } },
+                { fullName: { $regex: searchQuery, $options: 'i' } },
+            ]
+         });
+
+         res.status(200).json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
 const updateUser = async (req, res) => {
     const userId = req.params._id;
     const userData = req.body;
@@ -79,4 +97,5 @@ module.exports = {
     getUserByEmail,
     updateUser,
     deleteUser,
+    searchUser,
 }

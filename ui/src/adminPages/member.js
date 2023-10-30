@@ -6,7 +6,6 @@ const Member = () => {
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
     const [editedData, setEditedData] = useState([]);
-
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [pageSize] = useState(5);
@@ -16,23 +15,21 @@ const Member = () => {
         setCurrentPage(newPage);
     };
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:5000/api/v1/user/getallusers')
-    //         .then((response) => {
-    //             setUsers(response.data);
-    //         })
-    //         .catch((err) => {
-    //             console.error('Error fetching users', err);
-    //         });
-    // }, []);
-
     useEffect(() => {
         if (searchQuery) {
-            // axios.get(`http://20.3.232.49:4400/api/v1/user/getuser?email=${searchQuery}`)
-            axios.get(`http://localhost:4400/api/v1/user/getuser?email=${searchQuery}`)
+            // axios.get(`http://20.3.232.49:4400/api/v1/user/searchuser/${searchQuery}`)
+            axios.get(`http://localhost:4400/api/v1/user/searchuser/${searchQuery}`)
                 .then((response) => {
-                    setUsers(response.data.users);
-                    setTotalPages(response.data.totalPage);
+                    console.log(response);
+                    console.log(response.data);
+                    const searchResult = response.data;
+                    console.log('result is : ' + searchResult);
+
+                    if (response.data.users === 0) {
+                        setUsers([]);
+                    } else {
+                        setUsers(searchResult);
+                    }
                 })
                 .catch((err) => {
                     console.error('Error fetching users', err);
@@ -90,7 +87,8 @@ const Member = () => {
         const shouldDelete = window.confirm("Are you sure you want to delete this user?");
 
         if (shouldDelete) {
-            axios.delete(process.env.DEV_URL + `/user/deleteuser/${userId}`)
+            // axios.delete(`http://20.3.232.49:4400/api/v1/user/deleteuser/${userId}`)
+            axios.delete(`http://localhost:4400/api/v1/user/deleteuser/${userId}`)
                 .then((response) => {
                     console.log('Deleted user!');
 
@@ -106,9 +104,7 @@ const Member = () => {
     }
 
     const headers = users.length > 0 ? Object.keys(users[0]) : [];
-
     const excludedFields = ['role', 'password', '__v'];
-
     const filteredHeaders = headers.filter(header => !excludedFields.includes(header));
 
 
@@ -122,7 +118,6 @@ const Member = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search..."
             />
-            <>{searchQuery}</>
 
             <table>
                 <thead>
@@ -173,7 +168,7 @@ const Member = () => {
                     Next
                 </button>
             </div>
-        </div>
+        </div >
     );
 }
 
