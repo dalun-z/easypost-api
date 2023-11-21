@@ -63,16 +63,13 @@ function TransactionForm() {
 
   const downloadImage = async () => {
     if (shipmentLabel) {
-      const imageURL = await axios.get('http://localhost:4400/api/v1/getImage', shipmentLabel);
+      const imageURL = `http://localhost:4400/api/v1/getImage/${shipmentLabel}`;
 
       console.log('image URL : ', imageURL);
 
       window.open(shipmentLabel, '_blank');
       fetch(imageURL)
-        .then((response) => {
-          console.log('blob ',response)
-          response.blob()
-        })
+        .then(response => response.blob())
         .then((blob) => {
           // Create blob link to download
           const url = window.URL.createObjectURL(new Blob([blob]));

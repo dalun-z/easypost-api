@@ -47,9 +47,9 @@ router.get('/shipments/:id/label', async (req, res) => {
     }
 });
 
-router.get('/getImage', async (req, res) => {
+router.get('/getImage/:url', async (req, res) => {
     try {
-        const imageURL = req.body;
+        const { imageURL } = req.params;
         console.log(imageURL);
 
         req.pipe(request(imageURL)).pipe(res);
@@ -57,7 +57,6 @@ router.get('/getImage', async (req, res) => {
         console.error('Error fetch the image url: ', error);
         res.status(500).json({ error: 'Internal server error' });
     }
-
 })
 
 module.exports = router;
