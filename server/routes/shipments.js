@@ -1,4 +1,3 @@
-// routes/shipments.js
 const express = require('express');
 const router = express.Router();
 const EasyPostClient = require('@easypost/api');
@@ -47,5 +46,18 @@ router.get('/shipments/:id/label', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+router.get('/getImage', async (req, res) => {
+    try {
+        const imageURL = req.body;
+        console.log(imageURL);
+
+        req.pipe(request(imageURL)).pipe(res);
+    } catch (error) {
+        console.error('Error fetch the image url: ', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+
+})
 
 module.exports = router;

@@ -31,7 +31,6 @@ function TransactionForm() {
     weight: 5,
   });
 
-  const [shipmentResult, setShipmentResult] = useState('');
   const [shipmentLabel, setShipmentLabel] = useState(null);
   const [txtDownloadUrl, setTxtDownloadUrl] = useState(null);
 
@@ -62,34 +61,31 @@ function TransactionForm() {
     </div>
   );
 
-  const generateTxtData = (data) => {
-    const formattedData = JSON.stringify(data, null, 2);
-    return formattedData;
-  };
-
-  const downloadImage = () => {
+  const downloadImage = async () => {
     if (shipmentLabel) {
+      const imageURL = await axios.get('http://localhost:4400/api/v1/getImage', shipmentLabel);
+
+      console.log('image URL : ', imageURL);
+
       window.open(shipmentLabel, '_blank');
-      fetch('https://cors-anywhere.herokuapp.com/' + shipmentLabel, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/pdf',
-        },
-      })
-        .then((response) => response.blob())
+      fetch(imageURL)
+        .then((response) => {
+          console.log('blob ',response)
+          response.blob()
+        })
         .then((blob) => {
           // Create blob link to download
           const url = window.URL.createObjectURL(new Blob([blob]));
           const link = document.createElement('a');
           link.href = url;
-          link.setAttribute('download', 'shipmentLabel.pdf'); // Set the desired filename
+          link.download = 'downloaded_img.png'
           document.body.appendChild(link);
 
           // Start download
           link.click();
 
           // Clean up and remove the link
-          link.parentNode.removeChild(link);
+          document.body.removeChild(link);
         });
     }
   }
@@ -105,10 +101,9 @@ function TransactionForm() {
       if (response.status === 200) {
         const shipmentId = response.data.id;
         console.log("shipment id is : " + shipmentId);
-        setShipmentResult(response.data);
 
         try {
-          const txtData = generateTxtData(response.data);
+          const txtData = JSON.stringify(response.data, null, 2);
           console.log('Shipment info: ', response.data);
           const txtBlob = new Blob([txtData], { type: 'text/plain' });
           const txtUrl = URL.createObjectURL(txtBlob);
@@ -161,7 +156,7 @@ function TransactionForm() {
                 Download TXT
               </a>
             </div>
-            {/* <pre>{JSON.stringify(shipmentResult, null, 2)}</pre> */}
+
           </div>
         )}
         {shipmentLabel && (
