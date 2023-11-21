@@ -31,7 +31,7 @@ function TransactionForm() {
     weight: 5,
   });
 
-  const [shipmentResult, setShipmentResult] = useState(null);
+  const [shipmentResult, setShipmentResult] = useState('');
   const [shipmentLabel, setShipmentLabel] = useState(null);
   const [txtDownloadUrl, setTxtDownloadUrl] = useState(null);
 
@@ -108,7 +108,8 @@ function TransactionForm() {
         setShipmentResult(response.data);
 
         try {
-          const txtData = generateTxtData(shipmentResult);
+          const txtData = generateTxtData(response.data);
+          console.log('Shipment info: ', response.data);
           const txtBlob = new Blob([txtData], { type: 'text/plain' });
           const txtUrl = URL.createObjectURL(txtBlob);
           setTxtDownloadUrl(txtUrl);
