@@ -5,16 +5,16 @@
 
 .path-row {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap; 
     justify-content: space-between;
 }
 
-.path-section {
-    flex-basis: calc(25% - 10px); /* Adjust the width to fit four fields in a row */
+ .path-section {
+    /* flex-basis: calc(25% - 10px); Adjust the width to fit four fields in a row */
     padding: 10px;
     border: 1px solid #ccc;
     margin-bottom: 20px;
-}
+} 
 
 h2 {
     margin-top: 0;
