@@ -5,6 +5,6 @@ const { addNewPath, getAllPath, getPathByID } = require('../controllers/path')
 
 router.post('/addnewpath', addNewPath);
 router.get('/getallpath', getAllPath);
-router.get('/getpathbyid/:_id', getPathByID);
+router.get('/getpathbyid/:ID', getPathByID);
 
 module.exports = router
