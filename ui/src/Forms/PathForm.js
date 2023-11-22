@@ -22,45 +22,30 @@ function MemberForm() {
     const handleInputChange = (field, value) => {
         const updatedFormData = { ...formData, [field]: { ...formData[field], value } };
         setFormData(updatedFormData);
-
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const isFormValid = Object.values(formData).every(field => !field.required || field.value.trim() !== '');
-
         if (isFormValid) {
-            // setFormData({
-            //     名称: '',
-            //     费率: '',
-            //     'Carrier ID': '',
-            //     'Carrier&Service': '',
-            //     签名: '',
-            //     'Api Key': '',
-            //     name: '',
-            //     street1: '',
-            //     street2: '',
-            //     city: '',
-            //     'state': '',
-            //     'zip code': '',
-            //     'country': '',
-            //     'phone': '',
-            // });
+            // do something
             alert('Form has been submitted!');
         } else {
             alert('Please fill in all required fields');
         }
-
     };
 
     const renderInputFields = () => (
         <div className="path-selection">
-            <h2>Path Information</h2>
             <form onSubmit={handleSubmit} className='path-form'>
                 {Object.entries(formData).map(([field, { value, required, options }]) => (
                     <React.Fragment key={field}>
-                        <label>{field.replace(/\*/g, '').replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}:</label>
+                        <label>
+                            {field.replace(/\*/g, '').replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
+                            {required && <span style={{ color: 'red' }}> * </span>}
+                            :
+                        </label>
                         {options ? (
                             <select
                                 value={value}

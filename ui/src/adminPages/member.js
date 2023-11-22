@@ -106,7 +106,7 @@ const Member = () => {
 
     return (
         <div className="member-container">
-            <h1>Member Information</h1>
+            <h1>会员管理</h1>
 
             <input
                 type="text"

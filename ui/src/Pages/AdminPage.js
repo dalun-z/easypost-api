@@ -10,7 +10,7 @@ import TransactionForm from "../Forms/TranscationForm";
 
 
 const AdminPage = () => {
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState('Member');
 
     const contentMap = {
         Member: <Member />,

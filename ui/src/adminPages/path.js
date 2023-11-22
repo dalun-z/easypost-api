@@ -4,11 +4,11 @@ import PathForm from '../Forms/PathForm';
 
 const AddPathForm = () => {
     return (
-      <div>
-        <PathForm />
-      </div>
+        <div>
+            <PathForm />
+        </div>
     );
-  };
+};
 
 const Path = () => {
     const data = [
@@ -68,7 +68,7 @@ const Path = () => {
     const [showAddChannel, setShowAddChannel] = useState(false);
 
     const toggleAddChannel = () => {
-      setShowAddChannel(!showAddChannel);
+        setShowAddChannel(!showAddChannel);
     };
 
     return (
@@ -76,7 +76,7 @@ const Path = () => {
             <h1>渠道信息</h1>
             <div className="">
                 <button onClick={toggleAddChannel}>
-                  {showAddChannel ? '关闭新增渠道' : '新增渠道'}
+                    {showAddChannel ? '关闭新增渠道' : '新增渠道'}
                 </button>
             </div>
             {showAddChannel && <AddPathForm />}

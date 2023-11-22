@@ -42,7 +42,7 @@ const order = () => {
 
     return (
         <div className="order-container">
-            <h1>Order Information</h1>
+            <h1>订单管理</h1>
             <table>
                 <thead>
                     <tr>
