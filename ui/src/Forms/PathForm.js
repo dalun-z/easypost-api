@@ -3,7 +3,7 @@ import '../css/PathForm.css';
 
 function MemberForm() {
     const [formData, setFormData] = useState({
-        名称: { value: '', required: true },
+        渠道名称: { value: '', required: true },
         费率: { value: '', required: true },
         CarrierID: { value: '', required: true },
         'Carrier&Service': { value: '', required: true },

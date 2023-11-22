@@ -15,7 +15,7 @@ const Path = () => {
         {
             ID: '1',
             渠道名称: 'Channel 1',
-            费率名称: 'Rate 1',
+            费率: 'Rate 1',
             渠道状态: 'Active',
             'Api ID': '12345',
             'Api Key': 'API Key 1',
@@ -27,7 +27,7 @@ const Path = () => {
         {
             ID: '2',
             渠道名称: 'Channel 2',
-            费率名称: 'Rate 2',
+            费率: 'Rate 2',
             渠道状态: 'Inactive',
             'Api ID': '67890',
             'Api Key': 'API Key 2',
@@ -39,7 +39,7 @@ const Path = () => {
         {
             ID: '3',
             渠道名称: 'Channel 3',
-            费率名称: 'Rate 3',
+            费率: 'Rate 3',
             渠道状态: 'Active',
             'Api ID': '54321',
             'Api Key': 'API Key 3',
@@ -51,7 +51,7 @@ const Path = () => {
         {
             ID: '4',
             渠道名称: 'Channel 4',
-            费率名称: 'Rate 4',
+            费率: 'Rate 4',
             渠道状态: 'Inactive',
             'Api ID': '98765',
             'Api Key': 'API Key 4',
