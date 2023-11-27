@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/PathForm.css';
 
-function MemberForm() {
+function PathForm() {
     const [formData, setFormData] = useState({
         渠道名称: { value: '', required: true },
         费率: { value: '', required: true },
@@ -42,6 +42,8 @@ function MemberForm() {
 
                 const cleanFormData = Object.fromEntries(Object.keys(formData).map(field => [field, { value: '' }]));
                 setFormData(cleanFormData);
+
+                window.location.reload();
             } catch (err) {
                 console.error(err);
                 if (err.response) {
@@ -102,4 +104,4 @@ function MemberForm() {
     );
 }
 
-export default MemberForm;
+export default PathForm;
