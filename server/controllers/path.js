@@ -3,6 +3,7 @@ const Path = require('../models/Path')
 const { StatusCodes } = require('http-status-codes')
 
 const addNewPath = async (req, res) => {
+    
     try {
         const path = await Path.create({ ...req.body });
         res.status(StatusCodes.CREATED).json({ path: path });
