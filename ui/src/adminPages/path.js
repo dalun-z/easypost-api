@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../css/Path.css'
+import axios from "axios";
 import PathForm from '../Forms/PathForm';
 
 const AddPathForm = () => {
@@ -11,65 +12,103 @@ const AddPathForm = () => {
 };
 
 const Path = () => {
-    const data = [
-        {
-            ID: '1',
-            渠道名称: 'Channel 1',
-            费率: 'Rate 1',
-            渠道状态: 'Active',
-            'Api ID': '12345',
-            'Api Key': 'API Key 1',
-            服务商: 'Provider 1',
-            服务方式: 'Method 1',
-            签名方式: 'Signature 1',
-            操作: 'Edit/Delete',
-        },
-        {
-            ID: '2',
-            渠道名称: 'Channel 2',
-            费率: 'Rate 2',
-            渠道状态: 'Inactive',
-            'Api ID': '67890',
-            'Api Key': 'API Key 2',
-            服务商: 'Provider 2',
-            服务方式: 'Method 2',
-            签名方式: 'Signature 2',
-            操作: 'Edit/Delete',
-        },
-        {
-            ID: '3',
-            渠道名称: 'Channel 3',
-            费率: 'Rate 3',
-            渠道状态: 'Active',
-            'Api ID': '54321',
-            'Api Key': 'API Key 3',
-            服务商: 'Provider 3',
-            服务方式: 'Method 3',
-            签名方式: 'Signature 3',
-            操作: 'Edit/Delete',
-        },
-        {
-            ID: '4',
-            渠道名称: 'Channel 4',
-            费率: 'Rate 4',
-            渠道状态: 'Inactive',
-            'Api ID': '98765',
-            'Api Key': 'API Key 4',
-            服务商: 'Provider 4',
-            服务方式: 'Method 4',
-            签名方式: 'Signature 4',
-            操作: 'Edit/Delete',
-        },
-        // Add more data objects here as needed
-    ];
+    const [path, setPath] = useState([]);
+    const [editingPath, setEditingPath] = useState(null);
+    const [editedData, setEditedData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [pageSize] = useState(10);
+    const [searchQuery, setSearchQuery] = useState('');
 
-    const headers = Object.keys(data[0]);
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
 
     const [showAddChannel, setShowAddChannel] = useState(false);
-
     const toggleAddChannel = () => {
         setShowAddChannel(!showAddChannel);
     };
+
+    useEffect(() => {
+        if (searchQuery) {
+            axios.get(`http://localhost:4400/api/v1/path/searchpath/${searchQuery}`)
+                .then((response) => {
+                    const searchResult = response.data;
+                    console.log('result is : ', searchResult);
+
+                    if (searchResult === 0) {
+                        setPath([]);
+                    } else {
+                        setPath(searchResult);
+                    }
+                })
+                .catch((err) => {
+                    console.error('Error fetch path', err);
+                });
+        } else {
+            axios.get(`http://localhost:4400/api/v1/path/getallpath?page=${currentPage}&pageSize=${pageSize}`)
+                .then((response) => {
+                    setPath(response.data.paths);
+                    setTotalPages(response.data.totalPages);
+                })
+                .catch((err) => {
+                    console.error('Error fetching path data', err);
+                });
+        }
+    }, [searchQuery, currentPage, pageSize]);
+
+    const handleEdit = (path) => {
+        setEditingPath(path);
+        setEditedData({});
+    }
+
+    const handleSaveEdit = (p) => {
+        const updatedPath = { ...p };
+
+        for (const header in editedData) {
+            updatedPath[header] = editedData[header];
+        }
+
+        axios.put(`http://localhost:4400/api/v1/path/updatepath/${p._id}`, updatedPath)
+            .then((response) => {
+                console.log('Updated path successfully!');
+
+                const updatedPaths = [...path];
+                const pathIndex = updatedPaths.findIndex((e) => e._id === p._id)
+
+                if (pathIndex !== -1) {
+                    updatedPaths[pathIndex] = updatedPath;
+                    setPath(updatedPaths);
+                }
+            })
+            .catch((err) => {
+                console.log('Error updating path', err);
+            })
+
+        setEditingPath(null);
+        setEditedData({});
+    }
+
+    const handleDelete = (pathID) => {
+        const shouldDelete = window.confirm("Are you sure you want to delete this path?");
+
+        if (shouldDelete) {
+            axios.delete(`http://localhost:4400/api/v1/path/deletepath/${pathID}`)
+                .then((response) => {
+                    console.log('Deleted path!');
+
+                    const updatedPath = path.filter((p) => p._id !== pathID);
+                    setPath(updatedPath);
+                })
+                .catch((err) => {
+                    console.log('Error deleting path', err);
+                })
+        }
+    }
+
+    const headers = path.length > 0 ? Object.keys(path[0]) : [];
+    const excludedFields = ['_id', '__v'];
+    const filteredHeaders = headers.filter(header => !excludedFields.includes(header));
 
     return (
         <div className="path-container">
@@ -80,24 +119,63 @@ const Path = () => {
                 </button>
             </div>
             {showAddChannel && <AddPathForm />}
+
+            <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search..."
+            />
+
             <table>
                 <thead>
                     <tr>
-                        {headers.map((header) => (
+                        {filteredHeaders.map((header) => (
                             <th key={header}>{header}</th>
                         ))}
                     </tr>
                 </thead>
+
                 <tbody>
-                    {data.map((item, index) => (
-                        <tr key={index}>
-                            {headers.map((header) => (
-                                <td key={header}>{item[header]}</td>
+                    {path.map((path, index) => (
+                        <tr key={path.ID}>
+                            {filteredHeaders.map((header) => (
+                                <td key={header}>
+                                    {header === 'ID' ? `${path[header]}` : (
+                                        editingPath && editingPath.ID === path.ID ? (
+                                            <input
+                                                type="text"
+                                                value={editedData[header] || path[header]}
+                                                onChange={(e) => setEditedData({ ...editedData, [header]: e.target.value })}
+                                            />
+                                        ) : (
+                                            header === '费率' ? `${path[header]} %` : path[header]
+                                        )
+                                    )}
+                                </td>
                             ))}
+                            <td>
+                                {editingPath && editingPath._id === path._id ? (
+                                    <button onClick={() => handleSaveEdit(path)}>Save</button>
+                                ) : (
+                                    <button onClick={() => handleEdit(path)}>Edit</button>
+                                )}
+                                <button onClick={() => handleDelete(path._id)}>Delete</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            <div className="pagination">
+                <span>Page {currentPage} of {totalPages}</span>
+                <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                    Previous
+                </button>
+                <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                    Next
+                </button>
+            </div>
         </div>
     )
 }

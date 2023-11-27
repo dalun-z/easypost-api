@@ -8,7 +8,7 @@ function MemberForm() {
         费率: { value: '', required: true },
         CarrierID: { value: '', required: true },
         Carrier_Service: { value: '', required: true },
-        签名: { value: '', required: false, options: ['how long the option can be', 2, 3] },
+        签名: { value: '', required: false, options: ['', 'how long the option can be', 2, 3] },
         API_Key: { value: '', required: true },
         Name: { value: '', required: true },
         Street1: { value: '', required: true },
@@ -39,6 +39,9 @@ function MemberForm() {
                 console.log('form data: ', valuesToSend)
                 await axios.post('http://localhost:4400/api/v1/path/addnewpath', valuesToSend);
                 alert('Form submitted!');
+
+                const cleanFormData = Object.fromEntries(Object.keys(formData).map(field => [field, { value: '' }]));
+                setFormData(cleanFormData);
             } catch (err) {
                 console.error(err);
                 if (err.response) {
