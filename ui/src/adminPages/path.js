@@ -141,7 +141,7 @@ const Path = () => {
                         <tr key={path.ID}>
                             {filteredHeaders.map((header) => (
                                 <td key={header}>
-                                    {header === 'ID' ? `${path[header]}` : (
+                                    {(header === 'ID' || header === '签名') ? `${path[header]}` : (
                                         editingPath && editingPath.ID === path.ID ? (
                                             <input
                                                 type="text"
