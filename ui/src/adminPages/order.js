@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import '../css/Order.css'
+import axios from "axios";
 
-const order = () => {
+const Order = () => {
     const data = [
         {
             ID: '1',
@@ -61,8 +62,9 @@ const order = () => {
                     ))}
                 </tbody>
             </table>
+
         </div>
     );
 }
 
-export default order;
+export default Order;

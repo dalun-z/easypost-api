@@ -16,6 +16,18 @@ router.post('/createShipment', async (req, res) => {
     }
 });
 
+router.get('/shipments', async (req, res) => {
+    try {
+        const shipments = await client.Shipment.all({
+            page_size: 5,
+        });
+        res.json(shipments);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'An error occurred while fetching the shipments.' });
+    }
+})
+
 // Define the '/api/v1/shipments/:id/label' route
 router.get('/shipments/:id/label', async (req, res) => {
     const { id } = req.params;
