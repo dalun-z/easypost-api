@@ -16,6 +16,7 @@ router.post('/createShipment', async (req, res) => {
     }
 });
 
+// get all shipment under the API_KEY
 router.get('/shipments', async (req, res) => {
     try {
         const shipments = await client.Shipment.all({
