@@ -35,7 +35,7 @@ API Integration
 
 - Cancel Order
 ```
-// POST http://localhost:4400/api/v1/sheepthat/cancelorder
+// POST http://localhost:4400/sheepthat/cancelorder
 const cancelOrder = async (req, res) => {
     // Receive data from client
     responseData = {
@@ -45,9 +45,8 @@ const cancelOrder = async (req, res) => {
 
     // TODO(Optional): also can check if the token is valid 
     // if (valid) { send cancel request to EasyPost }
-
     // send the response data to EasyPost
-    result = axios.post('.../cancelorder', responseData.orderCode) // return true if cancelled successfully, return false otherwise
+    result = axios.post('EasyPostAPI/cancelorder', responseData.orderCode) // return true if cancelled successfully, return false otherwise
 
     // send the response from EasyPost to client
     res.status(200).json(result.data)
