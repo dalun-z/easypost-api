@@ -17,3 +17,38 @@ npm start
 cd ui
 npm run deploy
 ```
+
+
+# Design Log
+
+API Integration
+
+```
+{
+    "Content-Type": "application/json"
+    "token": {MongoDB - path collection - ObjectID}     // User use 'token' to send GET request to the server to get the data of the path
+    "referenceCode": {reference}                        // reference from the response data of EasyPost API
+}
+```
+
+`http://localhost:4400/api/v1/sheepthat`
+
+- Cancel Order
+```
+// http://localhost:4400/api/v1/sheepthat/cancelorder
+
+// Receive data from client
+responseData = {
+    orderCode,
+    token
+} = req.body
+
+// TODO(Optional): also can check if the token is valid 
+// if (valid) { send cancel request to EasyPost }
+
+// send the response data to EasyPost
+result = axios.post('..../cancelorder', responseData.orderCode) // return true if cancelled successfully, return false otherwise
+
+// send the response from EasyPost to client
+res.status(200).json(result.data)
+```
