@@ -1,0 +1,331 @@
+{
+	"info": {
+		"_postman_id": "1f247536-e289-4029-9270-529b80880e91",
+		"name": "EasyPost",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30701396"
+	},
+	"item": [
+		{
+			"name": "User (Test",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"user\",\r\n    \"email\": \"test@11.com\",\r\n    \"password\": \"12345678\",\r\n    \"fullName\": \"Test 11\",\r\n    \"region\": \"US\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4400/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4400",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4400/api/v1/user/getallusers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4400",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"getallusers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4400/api/v1/user/getuser/user-dalun@test.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4400",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"getuser",
+								"user-dalun@test.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4400/api/v1/user/searchuser/da",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4400",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"searchuser",
+								"da"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"_id\": \"6537f9b9eea94ef320acbc7b\",\r\n        \"role\": \"user\",\r\n        \"email\": \"user-dalun@test.com\",\r\n        \"password\": \"$2a$10$b5kmnp19f1yerJuyqdtDXuXuL8gndGYxJs4kAtEVP4j52mbBhBI0u\",\r\n        \"fullName\": \"Not gon tell u\",\r\n        \"region\": \"CA\",\r\n        \"balance\": 2,\r\n        \"pre_shipment\": 1,\r\n        \"pre_transit\": 3,\r\n        \"in_transit\": 0,\r\n        \"out_for_delivery\": 0,\r\n        \"delivered\": 0,\r\n        \"ok_to_pickup\": 0,\r\n        \"return_to_sender\": 0,\r\n        \"failure\": 0,\r\n        \"cancelled\": 0,\r\n        \"error\": 0,\r\n        \"__v\": 0\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4400/api/v1/user/updateuser/6537f9b9eea94ef320acbc7b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4400",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"updateuser",
+								"6537f9b9eea94ef320acbc7b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4400/api/v1/user/deleteuser/653a9ce0e47883fb9fb74b38",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4400",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"deleteuser",
+								"653a9ce0e47883fb9fb74b38"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User (Deploy",
+			"item": [
+				{
+					"name": "register (deploy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"admin\",\r\n    \"email\": \"frank.l@goabsi.com\",\r\n    \"password\": \"Postron13300\",\r\n    \"fullName\": \"Frank Lin\",\r\n    \"region\": \"US\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://20.3.232.49:4400/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"20",
+								"3",
+								"232",
+								"49"
+							],
+							"port": "4400",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all user (deploy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://20.3.232.49:4400/api/v1/user/getallusers",
+							"protocol": "http",
+							"host": [
+								"20",
+								"3",
+								"232",
+								"49"
+							],
+							"port": "4400",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"getallusers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order (Test",
+			"item": []
+		},
+		{
+			"name": "Path (Test",
+			"item": [
+				{
+					"name": "addNewPath",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"渠道名称\": \"test 3\",\r\n    \"费率\": \"3.44\",\r\n    \"CarrierID\": \"thisiscarrier\",\r\n    \"Carrier_Service\": \"PandaExpress\",\r\n    \"签名\": \"\",\r\n    \"API_Key\": \"asdfasafwer\",\r\n    \"Name\": \"alala name\",\r\n    \"Street1\": \"somewhere\",\r\n    \"Street2\": \"\",\r\n    \"City\": \"Industry\",\r\n    \"State\": \"CA\",\r\n    \"Zip_Code\": \"91744\",\r\n    \"Phone\": \"123-456-6789\",\r\n    \"Country\": \"USA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4400/api/v1/path/addnewpath",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4400",
+							"path": [
+								"api",
+								"v1",
+								"path",
+								"addnewpath"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllPath",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4400/api/v1/path/getallpath",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4400",
+							"path": [
+								"api",
+								"v1",
+								"path",
+								"getallpath"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getpathbyid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4400/api/v1/path/getpathbyid/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4400",
+							"path": [
+								"api",
+								"v1",
+								"path",
+								"getpathbyid",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "easypostAPIs (Test",
+			"item": [
+				{
+					"name": "GetAllShipments",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
