@@ -19,7 +19,7 @@ const pathRouter = require('./routes/path')
 const notFoundMiddleware = require('./middleware/not-found')
 const errorHandlerMiddleware = require('./middleware/error-handler')
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
   res.send('easypost api')
 })
 
