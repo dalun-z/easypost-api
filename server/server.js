@@ -14,6 +14,7 @@ const authRouter = require('./routes/auth')
 const userRouter = require('./routes/user')
 const shipmentRouter = require('./routes/shipments')
 const pathRouter = require('./routes/path')
+const outterRouter = require('./routes/outter')
 
 // error handler
 const notFoundMiddleware = require('./middleware/not-found')
@@ -28,6 +29,7 @@ app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/', shipmentRouter)
 app.use('/api/v1/path', pathRouter)
+app.use('/api/sheepthat', outterRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)

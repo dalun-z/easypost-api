@@ -49,7 +49,6 @@ const searchUser = async (req, res) => {
                 { fullName: { $regex: searchQuery, $options: 'i' } },
             ]
          });
-
          res.status(200).json(users);
     } catch (err) {
         console.error(err);
