@@ -100,9 +100,6 @@ const placeShipment = async (req, res) => {
             parcel
         }
 
-
-        // const ratesArray = shipment.rates.map(rate => rate.rate);
-        // res.json({ rates: ratesArray});
         const shipment = await client.Shipment.create(requestData);
         const ret_shipment = await client.Shipment.retrieve(shipment.id);
 
@@ -131,17 +128,15 @@ const placeShipment = async (req, res) => {
     }
 }
 
-const getTrakingInfo = async (req, res) => {
+const getShipmentInfo = async (req, res) => {
     try {
         const {
             pathID,
-            tracking_id
+            shipment_id,
         } = req.body;
-
+        
         var ID = parseInt(pathID);
-
         const path = await Path.findOne({ ID });
-
         if (!path) {
             return res.status(404).json({ message: `path not found by id`, path_ID, path });
         }
@@ -149,24 +144,48 @@ const getTrakingInfo = async (req, res) => {
         const api_key = path.API_Key;
         const client = new EasyPostClient(api_key);
 
-        const tracker = await client.Tracker.retrieve(tracking_id);
+    } catch (err) {
+        res.status(500).json({ err: ' Internal server error ' });
+    }
+}
 
-        // const ratesArray = shipment.rates.map(rate => rate.rate);
-        // res.json({ rates: ratesArray});
-        const trackingDetails = tracker.tracking_detaisl.map(detail => ({
-            message: detail.message,
-            datetime: detail.datetime,
-        }));
+const getTrakingInfo = async (req, res) => {
+    try {
+        const {
+            pathID,
+            tracking_code
+        } = req.body;
 
-        const responseData = {
-            status: tracker.status,
-            est_delivery_date: tracker.est_delivery_date,
-            trackingDetails: trackingDetails,
+        var ID = parseInt(pathID);
+        const path = await Path.findOne({ ID });
+        if (!path) {
+            return res.status(404).json({ message: `path not found by id`, path_ID, path });
         }
-        res.status(200).json(responseData);
+
+        const api_key = path.API_Key;
+        const client = new EasyPostClient(api_key);
+
+        try {
+            const tracker = await client.Tracker.retrieve(tracking_code);
+
+            const trackingDetails = tracker.tracking_details.map(detail => ({
+                message: detail.message,
+                status: detail.status,
+                datetime: detail.datetime,
+            }));
+
+            const responseData = {
+                status: tracker.status,
+                est_delivery_date: tracker.est_delivery_date,
+                trackingDetails: trackingDetails,
+            }
+            res.status(200).json(responseData);
+        } catch (err) {
+            res.status(500).json({ err: 'Error retrieve tracking id' });
+        }
     } catch (err) {
         console.error('Error fetching tracking info ', err);
-        res.status(500).json({ err: ' Internal server error '});
+        res.status(500).json({ err: ' Internal server error ' });
     }
 }
 
