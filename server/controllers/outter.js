@@ -1,5 +1,5 @@
 const Path = require('../models/Path')
-const express = require('express')
+const { getClientConnection } = require('../global/getClient')
 const EasyPostClient = require('@easypost/api')
 
 const getPathById = async (req, res) => {
@@ -54,16 +54,7 @@ const placeShipment = async (req, res) => {
             tophone,
         } = req.body;
 
-        var ID = parseInt(pathID);
-
-        const path = await Path.findOne({ ID });
-
-        if (!path) {
-            return res.status(404).json({ message: `path not found by id`, path_ID, path });
-        }
-
-        const api_key = path.API_Key;
-        const client = new EasyPostClient(api_key);
+        const { path, client } = await getClientConnection(pathID);
 
         const from_address = {
             street1: path.Street1,
@@ -105,7 +96,7 @@ const placeShipment = async (req, res) => {
 
         try {
             const boughtShipment = await client.Shipment.buy(ret_shipment.id, ret_shipment.lowestRate());
-            console.log(boughtShipment);
+            // console.log(boughtShipment);
             const labelUrl = boughtShipment.postage_label.label_url;
 
             const responseData = {
@@ -134,15 +125,30 @@ const getShipmentInfo = async (req, res) => {
             pathID,
             shipment_id,
         } = req.body;
-        
-        var ID = parseInt(pathID);
-        const path = await Path.findOne({ ID });
-        if (!path) {
-            return res.status(404).json({ message: `path not found by id`, path_ID, path });
-        }
 
-        const api_key = path.API_Key;
-        const client = new EasyPostClient(api_key);
+        const { path, client } = await getClientConnection(pathID);
+
+        try {
+            const shipment = await client.Shipment.retrieve(shipment_id);
+
+            const responseData = {
+                shipment_id: shipment.id,
+                status: shipment.status,
+                tracking_id: shipment.tracker.id,
+                tracking_code: shipment.tracking_code,
+                carrier: shipment.tracker.carrier,
+                parcel: {
+                    length: shipment.parcel.length,
+                    width: shipment.parcel.width,
+                    height: shipment.parcel.height,
+                    weight: shipment.parcel.weight
+                },
+                label: shipment.postage_label.label_url,
+            }
+            res.json(responseData);
+        } catch (err) {
+            res.status(500).json({ error: 'Error fetching shipment info' });
+        }
 
     } catch (err) {
         res.status(500).json({ err: ' Internal server error ' });
@@ -153,20 +159,13 @@ const getTrakingInfo = async (req, res) => {
     try {
         const {
             pathID,
-            tracking_code
+            tracking_id
         } = req.body;
 
-        var ID = parseInt(pathID);
-        const path = await Path.findOne({ ID });
-        if (!path) {
-            return res.status(404).json({ message: `path not found by id`, path_ID, path });
-        }
-
-        const api_key = path.API_Key;
-        const client = new EasyPostClient(api_key);
+        const { path, client } = await getClientConnection(pathID);
 
         try {
-            const tracker = await client.Tracker.retrieve(tracking_code);
+            const tracker = await client.Tracker.retrieve(tracking_id);
 
             const trackingDetails = tracker.tracking_details.map(detail => ({
                 message: detail.message,
@@ -189,8 +188,25 @@ const getTrakingInfo = async (req, res) => {
     }
 }
 
+const cancelShipment = async (req, res) => {
+    try {
+        const {
+            pathID,
+            shipment_id,
+            tracking_code
+        } = req.body;
+
+        const { path, client } = await getClientConnection(pathID);
+
+
+    } catch (err) {
+        res.status(500).json({ err: ' Internal server error ' });
+    }
+}
+
 module.exports = {
     getPathById,
     placeShipment,
+    getShipmentInfo,
     getTrakingInfo,
 }
