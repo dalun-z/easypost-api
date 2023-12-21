@@ -191,14 +191,14 @@ const cancelShipment = async (req, res) => {
     try {
         const {
             pathID,
-            tracking_code
+            tracking_codes
         } = req.body;
 
         const { client } = await getClientConnection(pathID);
 
         const cancelShipment = await client.Refund.create({
             carrier: 'USPS',
-            tracking_codes: tracking_code,
+            tracking_codes: tracking_codes,
         });
 
         res.status(200).json(cancelShipment);
