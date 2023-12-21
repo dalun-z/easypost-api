@@ -1,6 +1,5 @@
 const Path = require('../models/Path')
 const { getClientConnection } = require('../global/getClient')
-const EasyPostClient = require('@easypost/api')
 
 const getPathById = async (req, res) => {
     try {
@@ -126,7 +125,7 @@ const getShipmentInfo = async (req, res) => {
             shipment_id,
         } = req.body;
 
-        const { path, client } = await getClientConnection(pathID);
+        const { client } = await getClientConnection(pathID);
 
         try {
             const shipment = await client.Shipment.retrieve(shipment_id);
@@ -147,11 +146,11 @@ const getShipmentInfo = async (req, res) => {
             }
             res.json(responseData);
         } catch (err) {
-            res.status(500).json({ error: 'Error fetching shipment info' });
+            res.status(500).json({ error });
         }
 
     } catch (err) {
-        res.status(500).json({ err: ' Internal server error ' });
+        res.status(422).json({ err });
     }
 }
 
@@ -162,7 +161,7 @@ const getTrakingInfo = async (req, res) => {
             tracking_id
         } = req.body;
 
-        const { path, client } = await getClientConnection(pathID);
+        const { client } = await getClientConnection(pathID);
 
         try {
             const tracker = await client.Tracker.retrieve(tracking_id);
@@ -184,7 +183,7 @@ const getTrakingInfo = async (req, res) => {
         }
     } catch (err) {
         console.error('Error fetching tracking info ', err);
-        res.status(500).json({ err: ' Internal server error ' });
+        res.status(422).json({ err });
     }
 }
 
@@ -192,15 +191,19 @@ const cancelShipment = async (req, res) => {
     try {
         const {
             pathID,
-            shipment_id,
             tracking_code
         } = req.body;
 
-        const { path, client } = await getClientConnection(pathID);
+        const { client } = await getClientConnection(pathID);
 
+        const cancelShipment = await client.Refund.create({
+            carrier: 'USPS',
+            tracking_codes: tracking_code,
+        });
 
+        res.status(200).json(cancelShipment);
     } catch (err) {
-        res.status(500).json({ err: ' Internal server error ' });
+        res.status(422).json({ err });
     }
 }
 
@@ -209,4 +212,5 @@ module.exports = {
     placeShipment,
     getShipmentInfo,
     getTrakingInfo,
+    cancelShipment,
 }
