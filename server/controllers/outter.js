@@ -39,10 +39,7 @@ const placeShipment = async (req, res) => {
         const {
             pathID,
             remark,
-            length,
-            width,
-            height,
-            weight,
+            parcel,
             toname,
             tostreet1,
             tostreet2,
@@ -56,6 +53,7 @@ const placeShipment = async (req, res) => {
         const { path, client } = await getClientConnection(pathID);
 
         const from_address = {
+            verify: true,
             street1: path.Street1,
             street2: path.Street2,
             city: path.City,
@@ -67,6 +65,7 @@ const placeShipment = async (req, res) => {
         }
 
         const to_address = {
+            verify: true,
             name: toname,
             street1: tostreet1,
             street2: tostreet2,
@@ -77,17 +76,17 @@ const placeShipment = async (req, res) => {
             phone: tophone,
         }
 
-        const parcel = {
-            length: length,
-            width: width,
-            height: height,
-            weight: weight,
-        }
+        // const parcelData = parcels.map((parcel) => ({
+        //     length: parcel.length,
+        //     width: parcel.width,
+        //     height: parcel.height,
+        //     weight: parcel.weight,
+        // }));
 
         const requestData = {
             from_address,
             to_address,
-            parcel
+            parcel,
         }
 
         const shipment = await client.Shipment.create(requestData);
@@ -110,11 +109,11 @@ const placeShipment = async (req, res) => {
             res.json(responseData);
         } catch (error) {
             console.error('Error buying shipment: ', error);
-            return res.status(422).json({ error: 'No rates found or an error occurred during shipment purchase' });
+            return res.status(422).json({ error: 'No rates found or an error occurred during shipment purchase', requestData, ret_shipment });
         }
     } catch (err) {
         console.error('Error: ', err);
-        res.status(500).json({ message: 'Error placing order', err });
+        res.status(500).json({ message: 'Error placing order', parcelData });
     }
 }
 
