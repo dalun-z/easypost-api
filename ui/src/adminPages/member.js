@@ -142,13 +142,19 @@ const Member = () => {
                                     )}
                                 </td>
                             ))}
-                            <td>
+                            <td style={{ padding: 0}}>
                                 {editingUser && editingUser._id === user._id ? (
-                                    <button onClick={() => handleSaveEdit(user)}>Save</button>
+                                    <>
+                                        <button style={{ dispaly: 'inline-block' }} onClick={() => handleSaveEdit(user)}>保存</button>
+                                        <button style={{ dispaly: 'inline-block' }}>取消</button>
+                                    </>
                                 ) : (
-                                    <button onClick={() => handleEdit(user)}>Edit</button>
+                                    <>
+                                        <button style={{ dispaly: 'inline-block' }} onClick={() => handleEdit(user)}>调整</button>
+                                        <button style={{ dispaly: 'inline-block' }} onClick={() => handleDelete(user._id)}>修改渠道</button>
+                                        <button style={{ dispaly: 'inline-block' }} onClick={() => handleDelete(user._id)}>删除用户</button>
+                                    </>
                                 )}
-                                <button onClick={() => handleDelete(user._id)}>Delete</button>
                             </td>
                         </tr>
                     ))}
@@ -158,10 +164,10 @@ const Member = () => {
             <div className="pagination">
                 <span>Page {currentPage} of {totalPages}</span>
                 <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-                    Previous
+                    上一页
                 </button>
                 <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
-                    Next
+                    下一页
                 </button>
             </div>
         </div >

@@ -154,7 +154,7 @@ const Path = () => {
                                     )}
                                 </td>
                             ))}
-                            <td>
+                            <td style={{padding: 0}}>
                                 {editingPath && editingPath._id === path._id ? (
                                     <button onClick={() => handleSaveEdit(path)}>Save</button>
                                 ) : (
@@ -170,10 +170,10 @@ const Path = () => {
             <div className="pagination">
                 <span>Page {currentPage} of {totalPages}</span>
                 <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-                    Previous
+                    上一页
                 </button>
                 <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
-                    Next
+                    下一页
                 </button>
             </div>
         </div>
