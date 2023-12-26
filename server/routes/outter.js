@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
-const { getPathById,
+const { 
+    getPathById,
     placeShipment,
     getTrakingInfo,
     getShipmentInfo,

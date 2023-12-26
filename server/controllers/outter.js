@@ -113,7 +113,7 @@ const placeShipment = async (req, res) => {
         }
     } catch (err) {
         console.error('Error: ', err);
-        res.status(500).json({ message: 'Error placing order', parcelData });
+        res.status(500).json({ message: 'Error placing order' });
     }
 }
 

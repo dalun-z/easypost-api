@@ -15,6 +15,7 @@ const userRouter = require('./routes/user')
 const shipmentRouter = require('./routes/shipments')
 const pathRouter = require('./routes/path')
 const outterRouter = require('./routes/outter')
+const orderRouter = require('./routes/order')
 
 // error handler
 const notFoundMiddleware = require('./middleware/not-found')
@@ -30,6 +31,7 @@ app.use('/api/v1/user', userRouter)
 app.use('/api/v1/', shipmentRouter)
 app.use('/api/v1/path', pathRouter)
 app.use('/api/sheepthat', outterRouter)
+app.use('/api/v1', orderRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
